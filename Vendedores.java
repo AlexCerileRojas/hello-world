@@ -5,11 +5,11 @@ import java.util.Random;
 public class Vendedores {
 
     public static void main(String[] args){
-        int[][] ventas = new int[12][15];
+        int[][] ventas = new int[15][12];
         Random random = new Random();
 
-        for (int i = 0; i < 12; i++) {
-            for (int j = 0; j < 15; j++) {
+        for (int i = 0; i < 15; i++) {
+            for (int j = 0; j < 12; j++) {
                 ventas[i][j] = random.nextInt(100); //datos de 0 a 100 para la matriz de ventas
             }
         }
@@ -28,8 +28,9 @@ public class Vendedores {
 
     public static void mostrarMatriz(int[][] matriz) {
         System.out.println(" Matriz de ventas (12x15):");
-        for (int i = 0; i < 12; i++) {
-            for (int j = 0; j < 15; j++) {
+        for (int i = 0; i < 15; i++) {
+            System.out.print("Vendedor "+ (i+1) + ": ");
+            for (int j = 0; j < 12; j++) {
                 System.out.print(matriz[i][j] + "\t"); // el \t es para darle espacio a la matriz
             }
             System.out.println();
@@ -39,15 +40,15 @@ public class Vendedores {
     public static int vendedorConMasVentas(int[][] ventas) {
         int[] ventasPorVendedor = new int[15];
 
-        for (int j = 0; j < 15; j++) {
-            for (int i = 0; i < 12; i++) {
+        for (int j = 0; j < 12; j++) {
+            for (int i = 0; i < 15; i++) {
                 ventasPorVendedor[j] += ventas[i][j];
             }
         }
 
         int maxVentas = 0;
         int vendedorConMasVentas = 0;
-        for (int j = 0; j < 15; j++) {
+        for (int j = 0; j < 12; j++) {
             if (ventasPorVendedor[j] > maxVentas) {
                 maxVentas = ventasPorVendedor[j];
                 vendedorConMasVentas = j;
@@ -66,10 +67,10 @@ public class Vendedores {
         int mesMenor = -1;//
         int menorVentas = Integer.MAX_VALUE;
 
-        for (int i = 0; i < 12; i++) {
+        for (int i = 0; i < 15; i++) {
             int totalVentasMes = 0;
 
-            for (int j = 0; j < 15; j++){
+            for (int j = 0; j < 12; j++){
                 totalVentasMes+= ventas[i][j];
             }
             if (totalVentasMes < menorVentas){
@@ -84,8 +85,8 @@ public class Vendedores {
         int totalVendedores = 15;
         int totalMeses = 12;
 
-        for (int i = 0; i < totalMeses; i++) {
-            for (int j = 0; j < totalVendedores; j++) {
+        for (int i = 0; i < totalVendedores; i++) {
+            for (int j = 0; j < totalMeses; j++) {
                 totalVentasEmpresa += ventas[i][j];
             }
         }
@@ -97,9 +98,9 @@ public class Vendedores {
         System.out.println("Promedio de venta por vendedor: " + promedioPorVendedor);
     }
     public static int[] obtenerVentasVendedor5(int[][] ventas) {
-        int[] ventasVendedor5 = new int[12];
+        int[] ventasVendedor5 = new int[15];
 
-        for (int i = 0; i < 12; i++) {
+        for (int i = 0; i < 15; i++) {
             ventasVendedor5[i] = ventas[i][4];
         }
 
