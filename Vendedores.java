@@ -1,4 +1,4 @@
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -15,9 +15,14 @@ public class Vendedores {
         }
         mostrarMatriz(ventas);
 
-        calcularVentasAño(ventas);
+        mostrarVendedorConMasVentas(ventas);
 
         mesConMenoresVentas(ventas);
+
+        calcularPromedios(ventas);
+
+        int[] ventasVendedor5 = obtenerVentasVendedor5(ventas);
+        mostrarVentasVendedor5(ventasVendedor5);
 
     }
 
@@ -31,16 +36,29 @@ public class Vendedores {
         }
     }
 
-    public static void calcularVentasAño(int[][] ventas) {
+    public static int vendedorConMasVentas(int[][] ventas) {
+        int[] ventasPorVendedor = new int[15];
+
         for (int j = 0; j < 15; j++) {
-            int totalVentas = 0;
-
-            for (int i = 0; i < 12; i++){
-                totalVentas += ventas[i][j];
+            for (int i = 0; i < 12; i++) {
+                ventasPorVendedor[j] += ventas[i][j];
             }
-
-            System.out.println("Total de ventas en el año para el vendedor " + (j + 1) ": "+ totalVentas);
         }
+        int maxVentas = 0;
+        int vendedorConMasVentas = 0;
+        for (int j = 0; j < 15; j++) {
+            if (ventasPorVendedor[j] > maxVentas) {
+                maxVentas = ventasPorVendedor[j];
+                vendedorConMasVentas = j;
+            }
+        }
+        return vendedorConMasVentas;
+    }
+
+
+    public static void mostrarVendedorConMasVentas(int[][] ventas) {
+        int vendedorConMasVentas = vendedorConMasVentas(ventas);
+        System.out.println("El vendedor con más ventas en el año es el vendedor: " + (vendedorConMasVentas + 1));
     }
 
     public static void mesConMenoresVentas(int[][] ventas){
@@ -53,12 +71,44 @@ public class Vendedores {
             for (int j = 0; j < 15; j++){
                 totalVentasMes+= ventas[i][j];
             }
-            if (totalVentasMes < mesMenor){
+            if (totalVentasMes < menorVentas){
                 menorVentas = totalVentasMes;
                 mesMenor = i + 1;
             }
         }
-        System.out.println("El mes con menor ventas fue :" + mesMenor + "y vendio" + menorVentas);
+        System.out.println("El mes con menor ventas fue el : " + mesMenor + " y se vendio " + menorVentas);
     }
+    public static void calcularPromedios(int[][] ventas) {
+        int totalVentasEmpresa = 0;
+        int totalVendedores = 15;
+        int totalMeses = 12;
+
+        for (int i = 0; i < totalMeses; i++) {
+            for (int j = 0; j < totalVendedores; j++) {
+                totalVentasEmpresa += ventas[i][j];
+            }
+        }
+        double promedioMensual = (double) totalVentasEmpresa / totalMeses;
+
+        double promedioPorVendedor = (double) totalVentasEmpresa / totalVendedores;
+
+        System.out.println("Promedio de venta mensual de la empresa: " + promedioMensual);
+        System.out.println("Promedio de venta por vendedor: " + promedioPorVendedor);
+    }
+    public static int[] obtenerVentasVendedor5(int[][] ventas) {
+        int[] ventasVendedor5 = new int[12];
+
+        for (int i = 0; i < 12; i++) {
+            ventasVendedor5[i] = ventas[i][4];
+        }
+
+        return ventasVendedor5;
+    }
+    // Usamos un array para mostrar las ventas del vendedor 5
+    public static void mostrarVentasVendedor5(int[] ventasVendedor5) {
+        System.out.println("Ventas del vendedor 5: " + Arrays.toString(ventasVendedor5));
+        }
+
 }
+
 
