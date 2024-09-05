@@ -10,7 +10,7 @@ public class Vendedores {
 
         for (int i = 0; i < 12; i++) {
             for (int j = 0; j < 15; j++) {
-                ventas[i][j] = random.nextInt(100);
+                ventas[i][j] = random.nextInt(100); //datos de 0 a 100 para la matriz de ventas
             }
         }
         mostrarMatriz(ventas);
@@ -44,6 +44,7 @@ public class Vendedores {
                 ventasPorVendedor[j] += ventas[i][j];
             }
         }
+
         int maxVentas = 0;
         int vendedorConMasVentas = 0;
         for (int j = 0; j < 15; j++) {
