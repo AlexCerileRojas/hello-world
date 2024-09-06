@@ -1,5 +1,4 @@
 import java.util.Arrays;
-import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -40,11 +39,18 @@ public class Vendedores {
                     System.out.println("Mostrando mes con menores ventas: ");
                     mesConMenoresVentas(ventas);
                     break;
+
                 case 4:
+                    System.out.println("Calculando promedio de ventas de la empresa: ");
+                    calcularPromedios(ventas);
+                    break;
+
+                case 5:
                     System.out.println("Mostrando ventas del vendedor 5: ");
                     mostrarVentasVendedor5(obtenerVentasVendedor5(ventas));
                     break;
-                case 5:
+
+                case 6:
                     System.out.println("Saliendo del programa: ");
                     salir = true;
                     break;
@@ -61,8 +67,9 @@ public class Vendedores {
         System.out.println("1. Mostrar matriz ");
         System.out.println("2. Vendedor con mas ventas ");
         System.out.println("3. Mostrar mes con menores ventas ");
-        System.out.println("4. Mostrar ventas del vendedor 5 ");
-        System.out.println("5. Salir ");
+        System.out.println("4. Calcular promedio de ventas mensual ");
+        System.out.println("5. Mostrar ventas del vendedor 5 ");
+        System.out.println("6. Salir ");
         System.out.println("========================");
         System.out.print("Seleccione una opción: ");
     }
