@@ -1,33 +1,80 @@
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+import java.util.Scanner;
 
 public class Vendedores {
 
     public static void main(String[] args){
-        int[][] ventas = new int[15][12];
+        int[][] ventas = new int[15][12]; // i vendedores j meses
         Random random = new Random();
 
+        // matriz con valores aleatorios del 0 al 100
         for (int i = 0; i < 15; i++) {
             for (int j = 0; j < 12; j++) {
                 ventas[i][j] = random.nextInt(100); //datos de 0 a 100 para la matriz de ventas
             }
         }
-        mostrarMatriz(ventas);
 
-        mostrarVendedorConMasVentas(ventas);
+        iniciarMenu(ventas);
 
-        mesConMenoresVentas(ventas);
+    }
+    public static void iniciarMenu(int[][] ventas){
+        boolean salir = false;
+        Scanner scanner = new Scanner(System.in);
 
-        calcularPromedios(ventas);
+        while(!salir) {
+            mostrarMenu();                          // llamamos al metodo que imprimira el menu
+            int opcion = leerOpcion(scanner);        //lee la opcion del usuario
 
-        int[] ventasVendedor5 = obtenerVentasVendedor5(ventas);
-        mostrarVentasVendedor5(ventasVendedor5);
+            switch (opcion){
+                case 1:
+                    System.out.println("Mostrando matriz: ");
+                    mostrarMatriz(ventas);
+                    break;
+                case 2:
+                    System.out.println("Mostrando vendedor con mas ventas: ");
+                    mostrarVendedorConMasVentas(ventas);
+                    break;
+                case 3:
+                    System.out.println("Mostrando mes con menores ventas: ");
+                    mesConMenoresVentas(ventas);
+                    break;
+                case 4:
+                    System.out.println("Mostrando ventas del vendedor 5: ");
+                    mostrarVentasVendedor5(obtenerVentasVendedor5(ventas));
+                    break;
+                case 5:
+                    System.out.println("Saliendo del programa: ");
+                    salir = true;
+                    break;
+                default:
+                    System.out.println("La opcion no es valida, intentelo denuevo: ");
+            }
+        }
+        scanner.close();
 
     }
 
+    public static void mostrarMenu(){
+        System.out.println("========= Menú =========");
+        System.out.println("1. Mostrar matriz ");
+        System.out.println("2. Vendedor con mas ventas ");
+        System.out.println("3. Mostrar mes con menores ventas ");
+        System.out.println("4. Mostrar ventas del vendedor 5 ");
+        System.out.println("5. Salir ");
+        System.out.println("========================");
+        System.out.print("Seleccione una opción: ");
+    }
+
+    public static int leerOpcion(Scanner scanner) {
+        return scanner.nextInt();
+
+    }
+
+
     public static void mostrarMatriz(int[][] matriz) {
-        System.out.println(" Matriz de ventas (12x15):");
+        System.out.println(" Matriz de ventas (15x12):");
         for (int i = 0; i < 15; i++) {
             System.out.print("Vendedor "+ (i+1) + ": ");
             for (int j = 0; j < 12; j++) {
@@ -37,21 +84,22 @@ public class Vendedores {
         }
     }
 
-    public static int vendedorConMasVentas(int[][] ventas) {
+    // hacer una matriz con los valores de las sumas
+    public static int sumarConMasVentas(int[][] ventas) {
         int[] ventasPorVendedor = new int[15];
 
-        for (int j = 0; j < 12; j++) {
-            for (int i = 0; i < 15; i++) {
-                ventasPorVendedor[j] += ventas[i][j];
+        for (int i = 0; i < 15; i++) {    // recorre los vendedores
+            for (int j = 0; j < 12; j++) { // recorre los meses
+                ventasPorVendedor[i] += ventas[i][j];
             }
         }
 
         int maxVentas = 0;
         int vendedorConMasVentas = 0;
-        for (int j = 0; j < 12; j++) {
-            if (ventasPorVendedor[j] > maxVentas) {
-                maxVentas = ventasPorVendedor[j];
-                vendedorConMasVentas = j;
+        for (int i = 0; i < 15; i++) {
+            if (ventasPorVendedor[i] > maxVentas) {
+                maxVentas = ventasPorVendedor[i];
+                vendedorConMasVentas = i;
             }
         }
         return vendedorConMasVentas;
@@ -59,7 +107,7 @@ public class Vendedores {
 
 
     public static void mostrarVendedorConMasVentas(int[][] ventas) {
-        int vendedorConMasVentas = vendedorConMasVentas(ventas);
+        int vendedorConMasVentas = sumarConMasVentas(ventas);
         System.out.println("El vendedor con más ventas en el año es el vendedor: " + (vendedorConMasVentas + 1));
     }
 
@@ -67,18 +115,20 @@ public class Vendedores {
         int mesMenor = -1;//
         int menorVentas = Integer.MAX_VALUE;
 
-        for (int i = 0; i < 15; i++) {
+        for (int j = 0; j < 12; j++) {
             int totalVentasMes = 0;
 
-            for (int j = 0; j < 12; j++){
-                totalVentasMes+= ventas[i][j];
+            for (int i = 0; i < 15; i++) {
+                totalVentasMes += ventas[i][j];
             }
-            if (totalVentasMes < menorVentas){
+
+            if (totalVentasMes < menorVentas) {
                 menorVentas = totalVentasMes;
-                mesMenor = i + 1;
+                mesMenor = j + 1;
             }
         }
-        System.out.println("El mes con menor ventas fue el : " + mesMenor + " y se vendio " + menorVentas);
+
+        System.out.println("El mes con menores ventas fue: " + mesMenor + " y se vendieron " + menorVentas + " productos.");
     }
     public static void calcularPromedios(int[][] ventas) {
         int totalVentasEmpresa = 0;
